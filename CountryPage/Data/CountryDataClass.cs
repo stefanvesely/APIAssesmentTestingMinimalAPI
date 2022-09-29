@@ -4,9 +4,16 @@ namespace CountryPage.Data
 {
     public class CountryDataClass : ICountryDataClass
     {
-        public Task<List<CountryModel>> GetAllCountries()
+        private readonly HttpClient httpClient;
+
+        public CountryDataClass(HttpClient _httpClient)
         {
-            throw new NotImplementedException();
+            this.httpClient = _httpClient;
+        }
+
+        public async Task<List<CountryModel>> GetAllCountries()
+        {
+            return await httpClient.GetFromJsonAsync<List<CountryModel>>("/allcountries");
         }
 
         public Task<List<CountryModel>> GetCountriesWithCurrancyCode(string CurrancyCode)
